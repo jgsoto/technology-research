@@ -1,73 +1,99 @@
-# React + TypeScript + Vite
+````md
+# Dashboard App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+This is a small dashboard-style React application created to demonstrate the use of multiple modern frontend technologies. The project focuses on routing, state management, data fetching, and advanced React hooks in a simple and structured way.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Technologies Used
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React
+- TypeScript
+- Tailwind CSS
+- React Router
+- Zustand
+- TanStack Query
+- Cypress
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Multi-page navigation (Home / Users / Counter)
+- External API consumption (users list)
+- Global state management with Zustand (counter)
+- Search and filtering functionality
+- Responsive UI using Tailwind CSS
+- End-to-end testing with Cypress
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## React Hooks Used
+
+- useState → local component state
+- useEffect → side effects and lifecycle handling
+- useMemo → memoized computed values for filtering
+- useCallback → memoized event handlers
+- useTransition → non-blocking UI updates
+- useDeferredValue → deferred rendering for search input
+- useLayoutEffect → DOM measurements before paint
+
+---
+
+## API Reference
+
+https://jsonplaceholder.typicode.com/users
+
+---
+
+## Installation
+
+```bash
+npm install
+````
+
+---
+
+## Running the Project
+
+```bash
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Testing
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Cypress (End-to-End Testing)
+
+```bash
+npx cypress open
+```
+
+---
+
+## Project Structure
+
+```txt
+src/
+├── pages/
+│   ├── Home.tsx
+│   ├── Users.tsx
+│   └── Counter.tsx
+├── components/
+├── store/
+├── services/
+├── router/
+└── main.tsx
+```
+
+---
+
+## Purpose
+
+This project was developed for educational purposes to practice and demonstrate modern React development concepts and ecosystem tools.
+
+```
 ```
