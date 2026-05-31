@@ -59,6 +59,7 @@ npx cypress run
 
 ## Project Structure
 
+```text
 src/
 ├── pages/
 │   ├── Home.tsx
@@ -75,6 +76,8 @@ src/
 │   └── AppRouter.tsx
 ├── App.tsx
 └── main.tsx
+```
+
 
 ## Key Implementation Notes
 
