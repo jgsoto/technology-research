@@ -2,7 +2,7 @@ import {Link} from "react-router";
 
 function Navbar(){
     return(
-        <nav>
+        <nav className="flex gap-4 p-4 border-b">
             <Link to="/">Home</Link>
             {"|"}
             <Link to="/users">Users</Link>
