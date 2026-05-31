@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getUsers } from "../Services/usersApi";
-import { useDeferredValue, useState, useMemo } from "react";
+import { useDeferredValue, useState, useMemo, useCallback, useTransition } from "react";
 
 function Users() {
     const { data: users = [], isLoading, error, } = useQuery({
@@ -10,6 +10,21 @@ function Users() {
 
     const [search, setSearch] = useState("");
 
+    const [isPending, startTransition] = useTransition();
+
+    const handleSearch = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+
+            const value = e.target.value;
+
+            startTransition(() => {
+                setSearch(value);
+            });
+
+        },
+        []
+    );
+
     const deferredSearch = useDeferredValue(search);
 
     const filteredUsers = useMemo(() => {
@@ -18,6 +33,10 @@ function Users() {
         )
     }, [users, deferredSearch]);
 
+    if (isLoading) return <h1>Loading...</h1>;
+
+    if (error) return <h1>Error loading users</h1>;
+
     return (
         <div>
             <h1>Users Page</h1>
@@ -25,21 +44,20 @@ function Users() {
                 type="text"
                 placeholder="search users..."
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={handleSearch}
             />
-            {isLoading && <h1>Loading...</h1>}
-            {error && <h1>Error loading users</h1>}
-            {users && (
-                <div>
-                    <h1>Users list</h1>
-                    <ul>
-                        {filteredUsers.map(user => (
-                            <li key={user.id}>
-                                {user.name}
-                            </li>
-                        ))}
-                    </ul>
-                </div>)}
+            {isPending && <h1>Searching...</h1>}
+            
+            <div>
+                <h1>Users list</h1>
+                <ul>
+                    {filteredUsers.map(user => (
+                        <li key={user.id}>
+                            {user.name}
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     )
 }
