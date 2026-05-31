@@ -37,13 +37,45 @@ This is a small dashboard-style React application created to demonstrate the use
 
 https://jsonplaceholder.typicode.com/users
 
+---
+
+## Documentation References
+
+React:
+https://react.dev/
+
+TypeScript:
+https://www.typescriptlang.org/docs/
+
+Tailwind CSS:
+https://tailwindcss.com/docs/installation
+
+React Router:
+https://reactrouter.com/en/main
+
+Zustand:
+https://zustand-demo.pmnd.rs/
+
+TanStack Query:
+https://tanstack.com/query/latest
+
+Cypress:
+https://docs.cypress.io/
+
+---
+
+
 ## Installation
 
+```text
 npm install
+```
 
 ## Running the Project
 
+```text
 npm run dev
+```
 
 The application will run at:
 
@@ -53,10 +85,12 @@ http://localhost:5173
 
 ### Cypress (End-to-End Testing)
 
+```text
 npx cypress open
-
+```
+```text
 npx cypress run
-
+```
 ## Project Structure
 
 ```text
