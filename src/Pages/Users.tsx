@@ -43,6 +43,7 @@ function Users() {
             <h1 className="text-3xl font-bold mb-6">Users Page</h1>
 
             <input
+                data-cy="search-input"
                 type="text"
                 placeholder="search users..."
                 value={search}
@@ -50,11 +51,16 @@ function Users() {
                 className="mb-6 w-full max-w-md rounded-lg border px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
 
-            {isPending && <h1 className="mb-4 text-sm text-gray-500">Searching...</h1>}
+            {isPending && <h1
+                data-cy="searching-message"
+                className="mb-4 text-sm text-gray-500">Searching...</h1>}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div
+                data-cy="users-grid"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredUsers.map(user => (
                     <UserCard
+                        data-cy="user-card"
                         key={user.id}
                         name={user.name}
                         email={user.email}
