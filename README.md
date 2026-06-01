@@ -1,88 +1,156 @@
-# Chakra Todo App — Project 4
+# Project 5 - TanStack Router Demo
 
-A professional task management application built with **React**, **Chakra UI**, and **MobX** for reactive state management. This project follows the **Atomic Design** architecture and demonstrates advanced React hook usage for internal component logic and imperative control.
+This branch is a minimal React + TypeScript starter for a TanStack Router demo.
+It keeps the app intentionally small and focuses on typed navigation plus one external
+state example with `useSyncExternalStore`.
 
-## 🚀 Technologies & Versions
+## Overview
 
-- **React 19.2**: Core UI library.
-- **Chakra UI 2.8.0**: Component library for modular and accessible UI.
-- **MobX 6.15.4**: Reactive state management for the global todo store.
-- **Vite 8.0.12**: Fast build tool and development server.
-- **TypeScript 6.0.2**: Static typing for enhanced developer experience.
+The app shows three routes:
 
-## 🏗️ Project Architecture
+- Home
+- Users
+- About
 
-The project is structured following the **Atomic Design** methodology, ensuring high modularity and reusability:
+It also includes a lightweight theme toggle backed by `localStorage` to demonstrate
+how React can subscribe to external state.
+
+## Tech Stack
+
+- React 19
+- TypeScript 6
+- Vite 8
+- TanStack Router 1
+
+## Technology Definitions
+
+### React
+
+React is a JavaScript library for building user interfaces with reusable components.
+It is the foundation of this project and is responsible for rendering the pages,
+the shared layout, and the UI that reacts to state changes.
+
+### TypeScript
+
+TypeScript is a typed superset of JavaScript. It adds static typing on top of JavaScript,
+which helps catch errors earlier and makes the routing and store code easier to maintain.
+
+### Vite
+
+Vite is a fast frontend build tool and development server. In this project it handles
+local development, production builds, and fast refresh during development.
+
+### TanStack Router
+
+TanStack Router is a type-safe routing library for React. It manages navigation between
+pages, keeps route definitions explicit, and helps prevent routing mistakes with TypeScript.
+
+### JavaScript
+
+JavaScript is the language that powers the browser. This demo uses JavaScript concepts
+through React and TypeScript to handle UI behavior, events, and state synchronization.
+
+## Features
+
+- Typed route navigation
+- Shared layout with a top navigation bar
+- Theme toggle synced with `localStorage`
+- Simple demo pages for Home, Users, and About
+
+## Hooks Used
+
+### `useSyncExternalStore`
+
+Used in `src/hooks/useTheme.ts` to keep the UI synchronized with an external theme store.
+
+Typical use case:
+
+- listening to `localStorage` changes
+- syncing a shared store outside React
+
+Why it is useful here:
+
+- It lets React subscribe to data that lives outside the component tree.
+- It keeps the theme value in sync if another tab updates `localStorage`.
+- It provides a stable way to integrate external state without using a larger state library.
+
+### `useEffect`
+
+Used in the layout to apply the current theme to the document root.
+
+Why it is useful here:
+
+- It runs side effects after rendering.
+- It updates the document theme attribute when the external store changes.
+- It keeps the UI and the global page state aligned.
+
+## Architecture
+
+The project uses a small, clean structure:
 
 ```text
 src/
-├── components/
-│   ├── atoms/       # Smallest functional units (Button, Input, Checkbox)
-│   ├── molecules/   # Combinations of atoms (TodoForm, TodoItem, ConfirmModal)
-│   ├── organisms/   # Complex UI sections (TodoList, FilterTabs)
-│   └── templates/   # Page layout structures (TodoLayout)
-├── store/           # MobX reactive state management (TodoStore.ts)
-├── hooks/           # Custom React hooks (if any)
-├── App.tsx          # Root component
-└── main.tsx         # Application entry point
+  components/
+    atoms/
+    molecules/
+    templates/
+  hooks/
+  pages/
+  router/
+  store/
+  App.tsx
+  main.tsx
+  index.css
 ```
 
-## 🧠 Hook Implementation
+### File Roles
 
-This project explicitly implements two fundamental React hooks within the `molecules` layer to handle specific logic requirements:
+- `src/main.tsx`: app entry point.
+- `src/App.tsx`: renders the router provider.
+- `src/router/`: TanStack Router setup and route definitions.
+- `src/pages/`: page components for Home, Users, and About.
+- `src/components/templates/MainLayout.tsx`: shared layout with navigation.
+- `src/components/molecules/Navbar.tsx`: top navigation bar and theme toggle.
+- `src/components/atoms/`: small reusable UI primitives.
+- `src/hooks/useTheme.ts`: hook that reads from the external theme store.
+- `src/store/ExternalThemeStore.ts`: store that persists the theme in `localStorage`.
 
-### 1. `useReducer` (Internal State Management)
-Used in **`src/components/molecules/TodoForm.tsx`**.
-- **Definition**: Manages complex state logic where the next state depends on the previous one or when multiple sub-values are updated together.
-- **Usage**: Handles the form state for creating new tasks, including the input value (`title`), validation state (`isInvalid`), and a `RESET` action to clear the form after submission.
+## Installation
 
-### 2. `useImperativeHandle` (Imperative Component Control)
-Used in **`src/components/molecules/ConfirmModal.tsx`**.
-- **Definition**: Customizes the instance value that is exposed to parent components when using `ref`.
-- **Usage**: In conjunction with `forwardRef`, it exposes an `open()` method to the parent. This allows the parent component (e.g., `TodoItem`) to trigger the modal imperatively without having to manage the `isOpen` state locally.
+Install dependencies:
 
-## ✨ Features
+```bash
+npm install
+```
 
-- **Create Task**: Add new todos via a validated form.
-- **Delete Task**: Remove tasks with a confirmation modal for safety.
-- **Mark Completed**: Toggle task status with reactive updates.
-- **Filter Tasks**: Categorize view by "All", "Active", or "Completed".
-- **Reactive State**: Powered by MobX for seamless synchronization between the store and UI.
+Start the development server:
 
-## 🛠️ Installation & Setup
+```bash
+npm run dev
+```
 
-1. **Clone the repository**:
-   ```bash
-   git clone <repository-url>
-   cd technology-research
-   ```
+Build for production:
 
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
+```bash
+npm run build
+```
 
-3. **Run in development mode**:
-   ```bash
-   npm run dev
-   ```
+Preview the production build:
 
-4. **Build for production**:
-   ```bash
-   npm run build
-   ```
+```bash
+npm run preview
+```
 
-## 📚 Documentation References
+## Notes
 
-For further information on the technologies used in this project, please refer to their official documentation:
+- This project is intentionally small so it can be used as a clean base for later exercises.
+- The theme toggle is the only external state example; everything else stays simple and route-driven.
 
-- **React**: [react.dev](https://react.dev/)
-- **Chakra UI**: [chakra-ui.com](https://chakra-ui.com/)
-- **MobX**: [mobx.js.org](https://mobx.js.org/README.html)
-- **Vite**: [vite.dev](https://vite.dev/)
-- **TypeScript**: [typescriptlang.org](https://www.typescriptlang.org/)
-- **Atomic Design Principles**: [Brad Frost - Atomic Design](https://atomicdesign.bradfrost.com/)
+## Official Documentation
 
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
+- React: https://react.dev/
+- TypeScript: https://www.typescriptlang.org/
+- JavaScript Guide: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide
+- TanStack Router: https://tanstack.com/router/latest
+- Vite: https://vite.dev/
+- MDN Web Docs: https://developer.mozilla.org/
