@@ -1,106 +1,48 @@
-export type TodoFilter = 'all' | 'active' | 'completed'
+import { makeAutoObservable } from "mobx";
 
-export type Todo = {
-    id: number
-    title: string
-    completed: boolean
-    createdAt: string
+export interface Todo {
+    id: string;
+    title: string;
+    isCompleted: boolean;
 }
-
-export type TodoSnapshot = {
-    todos: Todo[]
-    filter: TodoFilter
-}
-
-type Listener = () => void
-
-const defaultTodos: Todo[] = [
-    {
-        id: 1,
-        title: 'Definir la estructura Atomic Design',
-        completed: true,
-        createdAt: new Date().toISOString(),
-    },
-    {
-        id: 2,
-        title: 'Conectar una store reactiva',
-        completed: false,
-        createdAt: new Date().toISOString(),
-    },
-]
 
 class TodoStore {
-    private snapshot: TodoSnapshot = {
-        todos: defaultTodos,
-        filter: 'all',
-    }
+    todos: Todo[] = [];
+    filter: "all" | "completed" | "active" = "all";
 
-    private listeners = new Set<Listener>()
-
-    subscribe = (listener: Listener) => {
-        this.listeners.add(listener)
-
-        return () => {
-            this.listeners.delete(listener)
-        }
-    }
-
-    getSnapshot = () => this.snapshot
-
-    private emit() {
-        this.listeners.forEach((listener) => listener())
+    constructor() {
+        makeAutoObservable(this);
     }
 
     addTodo(title: string) {
-        const trimmedTitle = title.trim()
-
-        if (!trimmedTitle) {
-            return
-        }
-
-        const nextTodo: Todo = {
-            id: Date.now(),
-            title: trimmedTitle,
-            completed: false,
-            createdAt: new Date().toISOString(),
-        }
-
-        this.snapshot = {
-            ...this.snapshot,
-            todos: [nextTodo, ...this.snapshot.todos],
-        }
-
-        this.emit()
+        const newTodo: Todo = {
+            id: crypto.randomUUID(),
+            title,
+            isCompleted: false,
+        };
+        this.todos.push(newTodo);
     }
 
-    toggleTodo(id: number) {
-        this.snapshot = {
-            ...this.snapshot,
-            todos: this.snapshot.todos.map((todo) =>
-                todo.id === id ? { ...todo, completed: !todo.completed } : todo,
-            ),
+    toggleTodo(id: string) {
+        const todo = this.todos.find((t) => t.id === id);
+        if (todo) {
+            todo.isCompleted = !todo.isCompleted;
         }
-
-        this.emit()
     }
 
-    removeTodo(id: number) {
-        this.snapshot = {
-            ...this.snapshot,
-            todos: this.snapshot.todos.filter((todo) => todo.id !== id),
-        }
-
-        this.emit()
+    deleteTodo(id: string) {
+        this.todos = this.todos.filter((t) => t.id !== id);
     }
 
-    setFilter(filter: TodoFilter) {
-        this.snapshot = {
-            ...this.snapshot,
-            filter,
-        }
+    setFilter(filter: "all" | "completed" | "active") {
+        this.filter = filter;
+    }
 
-        this.emit()
+    get filteredTodos() {
+        if (this.filter === "completed") return this.todos.filter((t) => t.isCompleted);
+        if (this.filter === "active") return this.todos.filter((t) => !t.isCompleted);
+        return this.todos;
     }
 }
 
-export const todoStore = new TodoStore()
+export const todoStore = new TodoStore();
