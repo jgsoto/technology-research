@@ -1,99 +1,53 @@
-# Project 5 - TanStack Router Demo
+# Project 3 - Material Theme App
 
-This branch is a minimal React + TypeScript starter for a TanStack Router demo.
-It keeps the app intentionally small and focuses on typed navigation plus one external
-state example with `useSyncExternalStore`.
+Material Theme App is a small React demo focused on global theme management with Material UI, React Context, and React Router.
+It showcases how a shared theme can drive the entire interface while keeping the codebase simple and easy to extend.
 
 ## Overview
 
-The app shows three routes:
-
-- Home
-- Users
-- About
-
-It also includes a lightweight theme toggle backed by `localStorage` to demonstrate
-how React can subscribe to external state.
+This project presents a themed application layout with a top navigation bar, reusable cards, a profile view, a settings view, and a global dark/light mode switch.
+The theme is managed centrally so every screen responds to the same visual state.
 
 ## Tech Stack
 
 - React 19
 - TypeScript 6
 - Vite 8
-- TanStack Router 1
-
-## Technology Definitions
-
-### React
-
-React is a JavaScript library for building user interfaces with reusable components.
-It is the foundation of this project and is responsible for rendering the pages,
-the shared layout, and the UI that reacts to state changes.
-
-### TypeScript
-
-TypeScript is a typed superset of JavaScript. It adds static typing on top of JavaScript,
-which helps catch errors earlier and makes the routing and store code easier to maintain.
-
-### Vite
-
-Vite is a fast frontend build tool and development server. In this project it handles
-local development, production builds, and fast refresh during development.
-
-### TanStack Router
-
-TanStack Router is a type-safe routing library for React. It manages navigation between
-pages, keeps route definitions explicit, and helps prevent routing mistakes with TypeScript.
-
-### JavaScript
-
-JavaScript is the language that powers the browser. This demo uses JavaScript concepts
-through React and TypeScript to handle UI behavior, events, and state synchronization.
+- Material UI
+- React Router
+- React Context API
 
 ## Features
 
-- Typed route navigation
-- Shared layout with a top navigation bar
-- Theme toggle synced with `localStorage`
-- Simple demo pages for Home, Users, and About
+- Responsive navbar
+- Reusable info cards
+- Profile page
+- Settings page
+- Global dark/light mode toggle
+- Shared application theme controlled from one place
 
 ## Hooks Used
 
-### `useSyncExternalStore`
+### `useContext`
 
-Used in `src/hooks/useTheme.ts` to keep the UI synchronized with an external theme store.
+Used to access the shared theme state from the custom theme hook.
+It allows the app to read and update the global theme without prop drilling.
 
-Typical use case:
+### `useDebugValue`
 
-- listening to `localStorage` changes
-- syncing a shared store outside React
+Used inside the custom theme hook to expose useful debug information in React DevTools.
+This makes it easier to inspect the current theme mode while developing.
 
-Why it is useful here:
-
-- It lets React subscribe to data that lives outside the component tree.
-- It keeps the theme value in sync if another tab updates `localStorage`.
-- It provides a stable way to integrate external state without using a larger state library.
-
-### `useEffect`
-
-Used in the layout to apply the current theme to the document root.
-
-Why it is useful here:
-
-- It runs side effects after rendering.
-- It updates the document theme attribute when the external store changes.
-- It keeps the UI and the global page state aligned.
-
-## Architecture
-
-The project uses a small, clean structure:
+## Project Structure
 
 ```text
 src/
   components/
     atoms/
     molecules/
+    organisms/
     templates/
+  context/
   hooks/
   pages/
   router/
@@ -103,19 +57,19 @@ src/
   index.css
 ```
 
-### File Roles
+## Key Files
 
-- `src/main.tsx`: app entry point.
-- `src/App.tsx`: renders the router provider.
-- `src/router/`: TanStack Router setup and route definitions.
-- `src/pages/`: page components for Home, Users, and About.
-- `src/components/templates/MainLayout.tsx`: shared layout with navigation.
-- `src/components/molecules/Navbar.tsx`: top navigation bar and theme toggle.
-- `src/components/atoms/`: small reusable UI primitives.
-- `src/hooks/useTheme.ts`: hook that reads from the external theme store.
-- `src/store/ExternalThemeStore.ts`: store that persists the theme in `localStorage`.
+- `src/App.tsx`: wraps the app with the theme provider and router.
+- `src/context/ThemeContext.tsx`: stores the global theme state.
+- `src/hooks/useAppTheme.ts`: custom hook for reading and toggling the theme.
+- `src/components/atoms/ThemeSwitch.tsx`: Material UI switch for dark/light mode.
+- `src/components/organisms/Navbar.tsx`: top navigation bar and theme control.
+- `src/components/molecules/InfoCard.tsx`: reusable card used across pages.
+- `src/pages/ProfilePage.tsx`: user profile demo screen.
+- `src/pages/SettingsPage.tsx`: settings and theme preferences screen.
+- `src/router/AppRouter.tsx`: application routing with React Router.
 
-## Installation
+## Available Scripts
 
 Install dependencies:
 
@@ -123,13 +77,13 @@ Install dependencies:
 npm install
 ```
 
-Start the development server:
+Run the development server:
 
 ```bash
 npm run dev
 ```
 
-Build for production:
+Build the project:
 
 ```bash
 npm run build
@@ -141,16 +95,14 @@ Preview the production build:
 npm run preview
 ```
 
+Run linting:
+
+```bash
+npm run lint
+```
+
 ## Notes
 
-- This project is intentionally small so it can be used as a clean base for later exercises.
-- The theme toggle is the only external state example; everything else stays simple and route-driven.
-
-## Official Documentation
-
-- React: https://react.dev/
-- TypeScript: https://www.typescriptlang.org/
-- JavaScript Guide: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide
-- TanStack Router: https://tanstack.com/router/latest
-- Vite: https://vite.dev/
-- MDN Web Docs: https://developer.mozilla.org/
+- The project is designed as a demonstration of a global theme workflow.
+- Material UI provides the visual foundation, while Context API keeps the theme state centralized.
+- The reusable card component makes it easy to expand the app with new sections later.
