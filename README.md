@@ -1,73 +1,88 @@
-# React + TypeScript + Vite
+# Chakra Todo App — Project 4
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A professional task management application built with **React**, **Chakra UI**, and **MobX** for reactive state management. This project follows the **Atomic Design** architecture and demonstrates advanced React hook usage for internal component logic and imperative control.
 
-Currently, two official plugins are available:
+## 🚀 Technologies & Versions
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React 19.2**: Core UI library.
+- **Chakra UI 2.8.0**: Component library for modular and accessible UI.
+- **MobX 6.15.4**: Reactive state management for the global todo store.
+- **Vite 8.0.12**: Fast build tool and development server.
+- **TypeScript 6.0.2**: Static typing for enhanced developer experience.
 
-## React Compiler
+## 🏗️ Project Architecture
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The project is structured following the **Atomic Design** methodology, ensuring high modularity and reusability:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+src/
+├── components/
+│   ├── atoms/       # Smallest functional units (Button, Input, Checkbox)
+│   ├── molecules/   # Combinations of atoms (TodoForm, TodoItem, ConfirmModal)
+│   ├── organisms/   # Complex UI sections (TodoList, FilterTabs)
+│   └── templates/   # Page layout structures (TodoLayout)
+├── store/           # MobX reactive state management (TodoStore.ts)
+├── hooks/           # Custom React hooks (if any)
+├── App.tsx          # Root component
+└── main.tsx         # Application entry point
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🧠 Hook Implementation
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+This project explicitly implements two fundamental React hooks within the `molecules` layer to handle specific logic requirements:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 1. `useReducer` (Internal State Management)
+Used in **`src/components/molecules/TodoForm.tsx`**.
+- **Definition**: Manages complex state logic where the next state depends on the previous one or when multiple sub-values are updated together.
+- **Usage**: Handles the form state for creating new tasks, including the input value (`title`), validation state (`isInvalid`), and a `RESET` action to clear the form after submission.
+
+### 2. `useImperativeHandle` (Imperative Component Control)
+Used in **`src/components/molecules/ConfirmModal.tsx`**.
+- **Definition**: Customizes the instance value that is exposed to parent components when using `ref`.
+- **Usage**: In conjunction with `forwardRef`, it exposes an `open()` method to the parent. This allows the parent component (e.g., `TodoItem`) to trigger the modal imperatively without having to manage the `isOpen` state locally.
+
+## ✨ Features
+
+- **Create Task**: Add new todos via a validated form.
+- **Delete Task**: Remove tasks with a confirmation modal for safety.
+- **Mark Completed**: Toggle task status with reactive updates.
+- **Filter Tasks**: Categorize view by "All", "Active", or "Completed".
+- **Reactive State**: Powered by MobX for seamless synchronization between the store and UI.
+
+## 🛠️ Installation & Setup
+
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd technology-research
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Run in development mode**:
+   ```bash
+   npm run dev
+   ```
+
+4. **Build for production**:
+   ```bash
+   npm run build
+   ```
+
+## 📚 Documentation References
+
+For further information on the technologies used in this project, please refer to their official documentation:
+
+- **React**: [react.dev](https://react.dev/)
+- **Chakra UI**: [chakra-ui.com](https://chakra-ui.com/)
+- **MobX**: [mobx.js.org](https://mobx.js.org/README.html)
+- **Vite**: [vite.dev](https://vite.dev/)
+- **TypeScript**: [typescriptlang.org](https://www.typescriptlang.org/)
+- **Atomic Design Principles**: [Brad Frost - Atomic Design](https://atomicdesign.bradfrost.com/)
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
