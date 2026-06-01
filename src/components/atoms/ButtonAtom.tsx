@@ -1,8 +1,15 @@
-import { Button } from "@chakra-ui/react";
-import type React from 'react'
+import type { ButtonHTMLAttributes, PropsWithChildren } from "react";
 
-type ButtonAtomProps = React.ComponentProps<typeof Button> & { label: string }
+type ButtonAtomProps = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>> & {
+    tone?: "primary" | "default";
+};
 
-export const ButtonAtom = ({ label, ...props }: ButtonAtomProps) => {
-    return <Button {...props}>{label}</Button>
-}
+export const ButtonAtom = ({ children, tone = "default", className, ...props }: ButtonAtomProps) => {
+    const toneClassName = tone === "primary" ? "button button--primary" : "button";
+
+    return (
+        <button className={[toneClassName, className].filter(Boolean).join(" ")} {...props}>
+            {children}
+        </button>
+    );
+};

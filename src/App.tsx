@@ -1,19 +1,6 @@
-import { TodoLayout } from "./components/templates/TodoLayout";
-import { TodoForm } from "./components/molecules/TodoForm";
-import { FilterTabs } from "./components/organisms/FilterTabs";
-import { TodoList } from "./components/organisms/TodoList";
-import { todoStore } from "./store/TodoStore";
+import { RouterProvider } from "@tanstack/react-router";
+import { router } from "./router/router";
 
 export const App = () => {
-  const handleAddTodo = (title: string) => {
-    todoStore.addTodo(title);
-  };
-
-  return (
-    <TodoLayout
-      form={<TodoForm onAddTodo={handleAddTodo} />}
-      filters={<FilterTabs />}
-      list={<TodoList />}
-    />
-  );
+  return <RouterProvider router={router} />;
 };
