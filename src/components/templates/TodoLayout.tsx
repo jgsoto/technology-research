@@ -1,4 +1,5 @@
-import type { ReactNode } from "react"
+import { Container, Heading, Stack } from "@chakra-ui/react";
+import type { ReactNode } from "react";
 
 interface TodoLayoutProps {
     form: ReactNode
@@ -8,18 +9,15 @@ interface TodoLayoutProps {
 
 export const TodoLayout = ({ form, filters, list }: TodoLayoutProps) => {
     return (
-        <div className="todo-shell">
-            <div className="todo-card">
-                <header className="todo-hero">
-                    <h1 className="todo-title">Chakra Todo App</h1>
-                </header>
-
-                <div className="todo-content">
-                    {form}
-                    {filters}
-                    {list}
-                </div>
-            </div>
-        </div>
+        <Container maxW="md" centerContent py={10}>
+            <Stack gap={6} width="100%">
+                <Heading as="h1" size="xl" color="teal.500">
+                    Chakra Todo App
+                </Heading>
+                {form}
+                {filters}
+                {list}
+            </Stack>
+        </Container>
     )
 }
