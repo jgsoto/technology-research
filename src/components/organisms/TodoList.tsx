@@ -1,22 +1,47 @@
-import type { Todo } from '../../store/TodoStore'
-import { TodoItem } from '../molecules/TodoItem'
+import { useRef, useState } from "react";
+import { VStack, Text } from "@chakra-ui/react";
+import { observer } from "mobx-react-lite";
+import { todoStore } from "../../store/TodoStore";
+import { TodoItem } from "../molecules/TodoItem";
+import { ConfirmModal, ConfirmModalRef } from "../molecules/ConfirmModal";
 
-type TodoListProps = {
-    todos: Todo[]
-    onToggle: (id: number) => void
-    onRemove: (id: number) => void
-}
+export const TodoList = observer(() => {
+    const modalRef = useRef<ConfirmModalRef>(null);
+    const [selectedTodoId, setSelectedTodoId] = useState<string | null>(null);
 
-export function TodoList({ todos, onToggle, onRemove }: TodoListProps) {
-    if (todos.length === 0) {
-        return <p className="todo-layout__empty">No hay tareas para este filtro.</p>
-    }
+    const handleToggle = (id: string) => {
+        todoStore.toggleTodo(id);
+    };
+
+    const handleDeleteClick = (id: string) => {
+        setSelectedTodoId(id);
+        modalRef.current?.open();
+    };
+
+    const handleConfirmDelete = () => {
+        if (selectedTodoId) {
+            todoStore.deleteTodo(selectedTodoId);
+            setSelectedTodoId(null);
+        }
+    };
 
     return (
-        <section className="todo-list" aria-label="Lista de tareas">
-            {todos.map((todo) => (
-                <TodoItem key={todo.id} todo={todo} onToggle={onToggle} onRemove={onRemove} />
+        <VStack spacing={3} width="100%">
+            {todoStore.filteredTodos.map((todo) => (
+                <TodoItem
+                    key={todo.id}
+                    title={todo.title}
+                    isCompleted={todo.isCompleted}
+                    onToggle={() => handleToggle(todo.id)}
+                    onDeleteClick={() => handleDeleteClick(todo.id)}
+                />
             ))}
-        </section>
-    )
-}
+
+            {todoStore.filteredTodos.length === 0 && (
+                <Text color="gray.500" py={4}>No tasks found.</Text>
+            )}
+
+            <ConfirmModal ref={modalRef} onConfirm={handleConfirmDelete} />
+        </VStack>
+    );
+});
