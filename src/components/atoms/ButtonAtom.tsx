@@ -1,13 +1,8 @@
-import { Button, ButtonProps } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
+import type React from 'react'
 
-interface ButtonAtomProps extends ButtonProps {
-    label: string;
-}
+type ButtonAtomProps = React.ComponentProps<typeof Button> & { label: string }
 
 export const ButtonAtom = ({ label, ...props }: ButtonAtomProps) => {
-    return (
-        <Button {...props}>
-            {label}
-        </Button>
-    );
-};
+    return <Button {...props}>{label}</Button>
+}

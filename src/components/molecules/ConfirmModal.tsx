@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle, useDisclosure } from "react";
+import { forwardRef, useImperativeHandle } from "react";
 import {
     Modal,
     ModalOverlay,
@@ -6,6 +6,7 @@ import {
     ModalHeader,
     ModalBody,
     ModalFooter,
+    useDisclosure,
 } from "@chakra-ui/react";
 import { ButtonAtom } from "../atoms/ButtonAtom";
 
@@ -35,7 +36,7 @@ export const ConfirmModal = forwardRef<ConfirmModalRef, ConfirmModalProps>(
         return (
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
-                <ModalContent>
+                <ModalContent mt={["75vh", "60vh", "50vh"]} w="50vw" maxW="md">
                     <ModalHeader>Delete Task</ModalHeader>
                     <ModalBody>Are you sure you want to delete this task?</ModalBody>
                     <ModalFooter>

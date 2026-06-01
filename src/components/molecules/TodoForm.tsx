@@ -1,4 +1,5 @@
-import { useReducer, FormEvent } from "react";
+import { useReducer } from "react";
+import type { FormEvent } from 'react'
 import { Flex } from "@chakra-ui/react";
 import { InputAtom } from "../atoms/InputAtom";
 import { ButtonAtom } from "../atoms/ButtonAtom";
@@ -48,7 +49,6 @@ export const TodoForm = ({ onAddTodo }: TodoFormProps) => {
             <InputAtom
                 placeholder="Add a new task..."
                 value={state.title}
-                isInvalid={state.isInvalid}
                 onChange={(e) => dispatch({ type: "SET_TITLE", payload: e.target.value })}
             />
             <ButtonAtom label="Add" colorScheme="teal" type="submit" />

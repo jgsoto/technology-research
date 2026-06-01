@@ -1,13 +1,12 @@
-import { Checkbox, CheckboxProps } from "@chakra-ui/react";
+import { Checkbox } from "@chakra-ui/react";
+import type React from 'react'
 
-interface CheckboxAtomProps extends CheckboxProps {
-    label?: string;
-}
+type CheckboxAtomProps = React.ComponentProps<typeof Checkbox> & { label?: string }
 
-export const CheckboxAtom = ({ label, ...props }: CheckboxAtomProps) => {
+export const CheckboxAtom = ({ label, children, ...props }: CheckboxAtomProps) => {
     return (
-        <Checkbox colorScheme="teal" {...props}>
-            {label}
+        <Checkbox {...props}>
+            {children ?? label}
         </Checkbox>
-    );
-};
+    )
+}

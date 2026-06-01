@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
-import { VStack, Text } from "@chakra-ui/react";
+import { Stack, Text } from "@chakra-ui/react";
 import { observer } from "mobx-react-lite";
 import { todoStore } from "../../store/TodoStore";
 import { TodoItem } from "../molecules/TodoItem";
-import { ConfirmModal, ConfirmModalRef } from "../molecules/ConfirmModal";
+import { ConfirmModal } from "../molecules/ConfirmModal";
+import type { ConfirmModalRef } from "../molecules/ConfirmModal";
 
 export const TodoList = observer(() => {
     const modalRef = useRef<ConfirmModalRef>(null);
@@ -26,7 +27,7 @@ export const TodoList = observer(() => {
     };
 
     return (
-        <VStack spacing={3} width="100%">
+        <Stack gap={3} width="100%">
             {todoStore.filteredTodos.map((todo) => (
                 <TodoItem
                     key={todo.id}
@@ -42,6 +43,6 @@ export const TodoList = observer(() => {
             )}
 
             <ConfirmModal ref={modalRef} onConfirm={handleConfirmDelete} />
-        </VStack>
+        </Stack>
     );
 });

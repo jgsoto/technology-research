@@ -1,11 +1,6 @@
-import { Input, InputProps } from "@chakra-ui/react";
+import { Input } from "@chakra-ui/react";
+import type React from 'react'
 
-export const InputAtom = (props: InputProps) => {
-    return (
-        <Input
-            focusBorderColor="teal.500"
-            errorBorderColor="red.300"
-            {...props}
-        />
-    );
-};
+export const InputAtom = (props: React.ComponentProps<typeof Input>) => {
+    return <Input {...props} />
+}
