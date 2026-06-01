@@ -1,23 +1,18 @@
-import { useEffect } from "react";
-import { Outlet } from "@tanstack/react-router";
-import { Navbar } from "../molecules/Navbar";
-import { useTheme } from "../../hooks/useTheme";
+import type { ReactNode } from "react";
+import { Container, Box } from "@mui/material";
+import { Navbar } from "../organisms/Navbar";
 
-export const MainLayout = () => {
-    const { theme } = useTheme();
+interface MainLayoutProps {
+    children: ReactNode;
+}
 
-    useEffect(() => {
-        document.documentElement.dataset.theme = theme;
-    }, [theme]);
-
+export const MainLayout = ({ children }: MainLayoutProps) => {
     return (
-        <div className="app-shell">
-            <div className="page-layout stack">
-                <Navbar />
-                <main className="card">
-                    <Outlet />
-                </main>
-            </div>
-        </div>
+        <Box sx={{ minH: "100vh", display: "flex", flexDirection: "column" }}>
+            <Navbar />
+            <Container component="main" sx={{ mt: 4, mb: 4, flexGrow: 1 }}>
+                {children}
+            </Container>
+        </Box>
     );
 };
